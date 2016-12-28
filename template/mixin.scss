@@ -14,7 +14,7 @@
   &:-ms-input-placeholder       { color: $color; } // Internet Explorer 10+
   &::-webkit-input-placeholder  { color: $color; } // Safari and Chrome
 }
-@mixin opacity($opacity) { opacity: $opacity; /* IE8 filter*/ $opacity-ie: ($opacity * 100); filter: ~"alpha(opacity=${opacity-ie})"; } // 투명도 적용
+@mixin opacity($opacity) { opacity: $opacity; /* IE8 filter*/ $opacity-ie: ($opacity * 100); filter:"alpha(opacity=#{$opacity-ie})"; } // 투명도 적용
 
 @mixin rotate($degrees) {
   -webkit-transform: rotate($degrees);
