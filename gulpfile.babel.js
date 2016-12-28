@@ -38,13 +38,16 @@ gulp.task("yeoman:html5",() => {
         save("val.less","src/resources/css/less/_lib");
         save("mixin.less","src/resources/css/less/_lib");
         save("sample.less","src/resources/css/less/sample");
+        save("val.scss","src/resources/css/scss/_lib");
+        save("mixin.scss","src/resources/css/scss/_lib");
+        save("sample.scss","src/resources/css/scss/sample");
     });
 });
 
 
 function save(file,path){
-    let url = "https://dstyle0210.github.io/dsPack/template/"+file;
-    let path = path+"/"+file;
+    var url = "https://dstyle0210.github.io/dsPack/template/"+file;
+    var path = path+"/"+file;
     request({
         url:url
     },function(err,res,data){
