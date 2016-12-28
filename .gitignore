@@ -50,10 +50,7 @@ jspm_packages
 
 
 /src/
-.gitignore
 .idea/
 node_modules/
-package.json
 src/
 .idea/workspace.xml
-!/package.json
