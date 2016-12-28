@@ -1,0 +1,30 @@
+// inline size
+@font-size:13px;
+
+// block size
+@wrap-width:100%; // 사이트 전체의 가로값
+@lnb-width:20%; // LNB영역의 가로값
+@content-width:@wrap-width - @lnb-width; // 컨덴츠 영역의 가로값
+@header-height:150px; // 헤더영역 높이
+@footer-height:150px; // 풋터영역 높이
+
+// Scaffolding Variables
+@body-bg:    #fff; // body의 배경색
+@text-color: @gray; // 폰트의 기본색
+@link-color:       @brand-primary;
+@link-hover-color: darken(@link-color, 15%);
+@image-url:"./images";
+
+// COLOR
+@gray-darker:  lighten(#000, 13.5%); // #222
+@gray-dark:    lighten(#000, 20%);   // #333
+@gray:         lighten(#000, 33.5%); // #555 // 기본폰트 컬러
+@gray-light:   lighten(#000, 46.7%); // #777
+@gray-lighter: lighten(#000, 93.5%); // #eee
+
+@brand-primary: darken(#428bca, 6.5%); // #337ab7
+@brand-success: #5cb85c;
+@brand-info:    #5bc0de;
+@brand-warning: #f0ad4e;
+@brand-danger:  #d9534f;
+
