@@ -6,16 +6,27 @@ import gutil from "gulp-util";
 import mkdirp from "mkdirp";
 import request from "request";
 import less from "gulp-less";
-import scss from "gulp-sass";
+import sass from "gulp-sass";
+import run from "run-sequence";
 
 const templates = {
     html5 : "https://dstyle0210.github.io/dsPack/template/html5.html",
     htmlxt: "https://dstyle0210.github.io/dsPack/template/xhtml.html"
 }
 var savePromise = [];
+gulp.task("css",["less","scss"],() => {
 
-gulp.task("default",() => {
+});
 
+gulp.task("less",() => {
+    gulp.src(["./src/resources/css/less/**/*.less","!./src/resources/css/less/_lib/*.less"])
+    .pipe(less())
+    .pipe(gulp.dest("./src/resources/css"));
+});
+gulp.task("scss",() => {
+    gulp.src(["./src/resources/css/scss/**/*.scss","!./src/resources/css/scss/_lib/*.scss"])
+    .pipe(sass().on("error",sass.logError))
+    .pipe(gulp.dest("./src/resources/css"));
 });
 gulp.task("yeoman",["yeoman:html5"],() => {
 
@@ -52,13 +63,9 @@ gulp.task("yeoman:html5",() => {
         Promise.all(savePromise).then(function (values) {
             console.log("완료됨");
             setTimeout(function(){
-                gulp.src(["src/resources/css/less/**/*.less","!src/resources/css/less/_lib/*.less"])
-                    .pipe(less())
-                    .pipe(gulp.dest("./src/resources/css"));
-                gulp.src(["src/resources/css/scss/**/*.scss","!src/resources/css/scss/_lib/*.scss"])
-                    .pipe(scss())
-                    .pipe(gulp.dest("./src/resources/css"));
-                console.log("컴파일 완료.");
+                run("less","scss",function(){
+                    console.log("컴파일 완료.");
+                });
             },1000);
         });
     });
