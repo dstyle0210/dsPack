@@ -19,6 +19,7 @@ gulp.task("yeoman:html5",() => {
     fs.mkdir("src",()=>{
         mkdirp("src/resources/css/less");
         mkdirp("src/resources/css/less/_lib");
+        mkdirp("src/resources/css/less/sample");
         mkdirp("src/resources/css/scss");
         mkdirp("src/resources/css/scss/_lib");
         mkdirp("src/resources/js/app");
@@ -33,23 +34,22 @@ gulp.task("yeoman:html5",() => {
             gutil.log("Make HTML Template End.");
         });
 
-        request({
-            url:"https://dstyle0210.github.io/dsPack/template/reset.css"
-        },function(err,res,reset){
-            fs.writeFile('src/resources/css/reset.css', reset, 'utf8', (err)=>{
-                if(err) console.log(err);
-            });
-            gutil.log("Make RESET CSS End.");
-        });
-
-        request({
-            url:"https://dstyle0210.github.io/dsPack/template/val.scss"
-        },function(err,res,scss){
-            fs.writeFile('src/resources/css/scss/val.scss', scss, 'utf8', (err)=>{
-                if(err) console.log(err);
-        });
-            gutil.log("Make SCSS Template End.");
-        });
-
+        save("reset.css","src/resources/css/");
+        save("val.less","src/resources/css/less/_lib");
+        save("mixin.less","src/resources/css/less/_lib");
+        save("sample.less","src/resources/css/less/sample");
     });
 });
+
+
+function save(file,path){
+    let url = "https://dstyle0210.github.io/dsPack/template/"+file;
+    let path = path+"/"+file;
+    request({
+        url:url
+    },function(err,res,data){
+        fs.writeFile(path , data, 'utf8', (err)=>{
+            if(err) console.log(err);
+        });
+    });
+};
