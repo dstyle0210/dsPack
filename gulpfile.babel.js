@@ -44,15 +44,22 @@ gulp.task("yeoman:html5",() => {
         savePromise.push( save("reset.css","src/resources/css/") );
         savePromise.push( save("val.less","src/resources/css/less/_lib") );
         savePromise.push( save("mixin.less","src/resources/css/less/_lib") );
-        savePromise.push( save("sample-less.less","src/resources/css/less/sample") );
+        savePromise.push( save("sample0.less","src/resources/css/less/sample") );
         savePromise.push( save("val.scss","src/resources/css/scss/_lib") );
         savePromise.push( save("mixin.scss","src/resources/css/scss/_lib") );
-        savePromise.push( save("sample-scss.scss","src/resources/css/scss/sample") );
+        savePromise.push( save("sample.scss","src/resources/css/scss/sample") );
 
         Promise.all(savePromise).then(function (values) {
-            gulp.src(["src/resources/css/less/**/*.less","!src/resources/css/less/_lib/*.less"])
-                .pipe(less())
-                .pipe(gulp.dest("./src/resources/css"));
+            console.log("완료됨");
+            setTimeout(function(){
+                gulp.src(["src/resources/css/less/**/*.less","!src/resources/css/less/_lib/*.less"])
+                    .pipe(less())
+                    .pipe(gulp.dest("./src/resources/css"));
+                gulp.src(["src/resources/css/scss/**/*.scss","!src/resources/css/scss/_lib/*.scss"])
+                    .pipe(scss())
+                    .pipe(gulp.dest("./src/resources/css"));
+                console.log("컴파일 완료.");
+            },1000);
         });
     });
 });
