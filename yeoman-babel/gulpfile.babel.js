@@ -42,16 +42,21 @@ const resources = { // resources
     less:"./src/resources/less",
     scss:"./src/resources/scss"
 };
-let downloadPromise = [];
+let downloadPromise = []; // 리소스 다운로드에 사용되는 Promise Array
+var concatStream = false; // CSS파일 병합시, 중복실행에 따른 Stream 오류 방지용 스위치
 
 
 /* TASK */
 gulp.task("default",() => {
     run("less:build","scss:build",function(){
         console.log("CSS PreParsher Compile Success.");
-        run("less","scss",function(){
-            console.log("Work Space Ready.");
+        run("css:build",function(){
+            run("less","scss",function(){
+                console.log("Work Space Ready.");
+                run("css",function(){});
+            });
         });
+
     });
 });
 gulp.task("less:build",() => {
@@ -60,6 +65,18 @@ gulp.task("less:build",() => {
 gulp.task("scss:build",() => {
     return pipeLineScss( gulp.src([resources.scss+"/**/*.scss","!"+resources.scss+"/_lib/*.scss"]) , resources.css);
 });
+gulp.task("css:build",folders(resources.css,function(folder){
+    var base = resources.css;
+    var dest = src.css;
+    return gulp.src(resources.css+"/"+folder+"/*.css")
+        .pipe(concat(folder+".css"))
+        .pipe(replace('@charset "UTF-8";',''))
+        .pipe(insert.prepend('@charset "UTF-8";\n'))
+        .pipe(replace('/*!','\n/*!'))
+        .pipe(replace(/[\n]{3}/g,"\n"))
+        .pipe(gulp.dest(base))
+        .pipe(gulp.dest(dest));
+}));
 
 gulp.task("less",function(){ // LESS 컴파일 watch
     var base = resources.less;
@@ -80,6 +97,20 @@ gulp.task("scss",function(){ // LESS 컴파일 watch
         var name = path.parse(file.path).base;
         pipeLineScss( gulp.src(file.path,{"base":base}) , dest );
         console.log(getTimeStamp() + " [scss] "+name+" changed");
+    });
+});
+gulp.task("css",function(){
+    var base = resources.css;
+    var dest = src.css;
+    var ext = "css";
+    return gulp.watch([base+"/**/*."+ext,"!"+base+"/*."+ext]).on("change",function(file){
+        var folder = getFolder(file);
+        var complate = pipeLineConcatCSS( gulp.src(base+"/"+folder+"/*."+ext) , folder+'.'+ext , base, dest);
+        if(complate){
+            console.log(getTimeStamp() + " [css] "+folder+".css concated");
+        }else{
+            console.log(getTimeStamp() + " [css] "+folder+".css concat failed");
+        };
     });
 });
 
@@ -170,7 +201,8 @@ function pipeLineLess(gulpFile , dest){
         .pipe(replace(/}/g,'}\n'))
         .pipe(replace('/*!','\n/*!'))
         .pipe(replace('{.','{\n\t.'))
-        .pipe(replace('"UTF-8";','"UTF-8";\n'))
+        .pipe(replace('@charset "UTF-8";',''))
+        .pipe(insert.prepend('@charset "UTF-8";\n'))
         .pipe(gulp.dest(dest));
 };
 function pipeLineScss(gulpFile , dest){
@@ -180,8 +212,26 @@ function pipeLineScss(gulpFile , dest){
         .pipe(replace(/}/g,'}\n'))
         .pipe(replace('/*!','\n/*!'))
         .pipe(replace('{.','{\n\t.'))
-        .pipe(replace('"UTF-8";','"UTF-8";\n'))
+        .pipe(replace('@charset "UTF-8";',''))
+        .pipe(insert.prepend('@charset "UTF-8";\n'))
         .pipe(gulp.dest(dest));
+};
+function pipeLineConcatCSS(gulpFiles,folderName , dest , ecmc){
+    if(!concatStream){
+        concatStream = true;
+        var gfile = gulpFiles.pipe(concat(folderName))
+            .pipe(replace('@charset "UTF-8";',''))
+            .pipe(insert.prepend('@charset "UTF-8";\n'))
+            .pipe(replace('/*!','\n/*!'))
+            .pipe(replace(/[\n]{3}/g,"\n"))
+            .pipe(gulp.dest(dest))
+            .pipe(gulp.dest(ecmc)).on("end",function(){
+                concatStream = false;
+            });
+        return gfile;
+    }else{
+        return false;
+    };
 };
 function getFolder(file){
     return path.parse( path.parse(file.path).dir ).base;
