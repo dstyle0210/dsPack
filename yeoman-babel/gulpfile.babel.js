@@ -27,7 +27,7 @@ const resources = { // resources
     less:"./src/resources/less",
     scss:"./src/resources/scss"
 };
-let savePromise = [];
+let downloadPromise = [];
 
 
 gulp.task("mkdir",() => {
@@ -41,19 +41,37 @@ gulp.task("mkdir",() => {
     gutil.log("Create Resources Folder.");
 });
 
+gulp.task("download",() => {
+    console.log("리소스 다운로드 시작.");
+    downloadPromise.push( download("reset.css",resources.css) );
+    downloadPromise.push( download("val.less",resources.less+"/_lib") );
+    downloadPromise.push( download("mixin.less",resources.less+"/_lib") );
+    downloadPromise.push( download("sample-less.less",resources.less+"/sample") );
+    downloadPromise.push( download("val.scss",resources.scss+"/_lib") );
+    downloadPromise.push( download("mixin.scss",resources.scss+"/_lib") );
+    downloadPromise.push( download("sample-scss.scss",resources.scss+"/sample") );
+
+    Promise.all(downloadPromise).then(function (values) {
+        console.log("리소스 다운로드 완료.");
+        setTimeout(function(){
+            run("less","scss",function(){
+                console.log("LESS , SCSS 컴파일 완료.");
+            });
+        },1000);
+    });
+});
+
 gulp.task("less",() => {
     gulp.src([resources.less+"/**/*.less","!"+resources.less+"/_lib/*.less"])
     .pipe(less())
     .pipe(gulp.dest(src.css));
 });
 gulp.task("scss",() => {
-    gulp.src([resources.less+"/**/*.scss","!"+resources.less+"/_lib/*.scss"])
+    gulp.src([resources.scss+"/**/*.scss","!"+resources.scss+"/_lib/*.scss"])
     .pipe(sass().on("error",sass.logError))
     .pipe(gulp.dest(src.css));
 });
-gulp.task("yeoman",["yeoman:5"],() => {
-
-});
+gulp.task("yeoman",["yeoman:5"],() => { });
 gulp.task("yeoman:5",["mkdir"],() => {
     request({
         url:templates+"/html5.html"
@@ -63,23 +81,20 @@ gulp.task("yeoman:5",["mkdir"],() => {
         });
         gutil.log("Make HTML Template End.");
     });
-
-    savePromise.push( download("reset.css",resources.css) );
-    savePromise.push( download("val.less",resources.less+"/_lib") );
-    savePromise.push( download("mixin.less",resources.less+"/_lib") );
-    savePromise.push( download("sample-less.less",resources.less+"/sample") );
-    savePromise.push( download("val.scss",resources.scss+"/_lib") );
-    savePromise.push( download("mixin.scss",resources.scss+"/_lib") );
-    savePromise.push( download("sample-scss.scss",resources.scss+"/sample") );
-
-    Promise.all(savePromise).then(function (values) {
-        console.log("리소스 다운로드 완료.");
-        setTimeout(function(){
-            run("less","scss",function(){
-                console.log("LESS , SCSS 컴파일 완료.");
-            });
-        },1000);
+    // 리소스 다운로드 시작.
+    run("download");
+});
+gulp.task("yeoman:xt",["mkdir"],() => {
+    request({
+        url:templates+"/xhtml.html"
+    },function(err,res,html){
+        fs.writeFile(src.root+"/template.html", html, 'utf8', (err)=>{
+            if(err) console.log(err);
+        });
+        gutil.log("Make HTML Template End.");
     });
+    // 리소스 다운로드 시작.
+    run("download");
 });
 
 

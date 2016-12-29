@@ -54,3 +54,4 @@ jspm_packages
 node_modules/
 src/
 .idea/workspace.xml
+yeoman-babel/src
