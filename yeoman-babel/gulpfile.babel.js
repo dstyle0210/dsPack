@@ -126,6 +126,14 @@ gulp.task("yeoman:5",["mkdir"],() => {
         });
         gutil.log("Make HTML Template End.");
     });
+    request({
+        url:templates+"/html5.html"
+    },function(err,res,html){
+        fs.writeFile(src.root+"/template.html", html, 'utf8', (err)=>{
+            if(err) console.log(err);
+        });
+        gutil.log("Make HTML Template End.");
+    });
     // 리소스 다운로드 시작.
     run("download");
 });
@@ -158,6 +166,7 @@ gulp.task("mkdir",() => {
 
 gulp.task("download",() => {
     console.log("리소스 다운로드 시작.");
+    downloadPromise.push( download("zen.json","./") );
     downloadPromise.push( download("reset.css",resources.css) );
     downloadPromise.push( download("val.less",resources.less+"/_lib") );
     downloadPromise.push( download("mixin.less",resources.less+"/_lib") );
