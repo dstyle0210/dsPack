@@ -4,7 +4,9 @@
  * @url : https://dstyle0210.github.io/gulp-setting/
  * @blog : http://dstyleitsme.tistory.com
  */
-
+/* 개발노트
+- less나 scss 폴더가 없다라면, 테스크도 실행시키지 않도록 한다.
+ */
 'use strict';
 
 /* gulp Task API
