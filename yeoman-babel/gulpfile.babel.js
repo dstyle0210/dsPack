@@ -126,14 +126,6 @@ gulp.task("yeoman:5",["mkdir"],() => {
         });
         gutil.log("Make HTML Template End.");
     });
-    request({
-        url:templates+"/html5.html"
-    },function(err,res,html){
-        fs.writeFile(src.root+"/template.html", html, 'utf8', (err)=>{
-            if(err) console.log(err);
-        });
-        gutil.log("Make HTML Template End.");
-    });
     // 리소스 다운로드 시작.
     run("download");
 });
@@ -179,8 +171,8 @@ gulp.task("download",() => {
         console.log("리소스 다운로드 완료.");
 
         setTimeout(function(){
-            run("less:build","scss:build",function(){
-                console.log("LESS , SCSS 컴파일 완료.");
+            run("less:build","scss:build","css:build",function(){
+                console.log("LESS , SCSS , CSS 컴파일 완료.");
             });
         },1000);
     });
