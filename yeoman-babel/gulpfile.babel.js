@@ -55,15 +55,15 @@ gulp.task("default",() => {
     });
 });
 gulp.task("less:build",() => {
-    return pipeLineLess( gulp.src([resources.less+"/**/*.less","!"+resources.less+"/_lib/*.less"]) , src.css);
+    return pipeLineLess( gulp.src([resources.less+"/**/*.less","!"+resources.less+"/_lib/*.less"]) , resources.css);
 });
 gulp.task("scss:build",() => {
-    return pipeLineScss( gulp.src([resources.scss+"/**/*.scss","!"+resources.scss+"/_lib/*.scss"]) , src.css);
+    return pipeLineScss( gulp.src([resources.scss+"/**/*.scss","!"+resources.scss+"/_lib/*.scss"]) , resources.css);
 });
 
 gulp.task("less",function(){ // LESS 컴파일 watch
     var base = resources.less;
-    var dest = src.css;
+    var dest = resources.css;
     var ext = "less";
     return gulp.watch([base+"/**/*."+ext,"!"+base+"/_lib/*."+ext]).on("change",function(file){
         var name = path.parse(file.path).base;
@@ -74,11 +74,11 @@ gulp.task("less",function(){ // LESS 컴파일 watch
 
 gulp.task("scss",function(){ // LESS 컴파일 watch
     var base = resources.scss;
-    var dest = src.css;
+    var dest = resources.css;
     var ext = "scss";
     return gulp.watch([base+"/**/*."+ext,"!"+base+"/_lib/*."+ext]).on("change",function(file){
         var name = path.parse(file.path).base;
-        pipeLineLess( gulp.src(file.path,{"base":base}) , dest );
+        pipeLineScss( gulp.src(file.path,{"base":base}) , dest );
         console.log(getTimeStamp() + " [scss] "+name+" changed");
     });
 });
