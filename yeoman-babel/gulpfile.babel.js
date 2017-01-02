@@ -6,6 +6,7 @@
  */
 /* 개발노트
 - less나 scss 폴더가 없다라면, 테스크도 실행시키지 않도록 한다.
+- html include 을 설정한다 http://recoveryman.tistory.com/286
  */
 'use strict';
 
@@ -47,14 +48,26 @@ const resources = { // resources
 };
 let downloadPromise = []; // 리소스 다운로드에 사용되는 Promise Array
 var concatStream = false; // CSS파일 병합시, 중복실행에 따른 Stream 오류 방지용 스위치
-
+var lessUsed = true;
+var scssUsed = true;
 
 /* TASK */
 gulp.task("default",() => {
-    run("less:build","scss:build",function(){
+    var buildTask = [];
+    var watchTask = [];
+    if(fs.existsSync("./src/resources/less")){
+        buildTask.push("less:build");
+        watchTask.push("less");
+    };
+    if(fs.existsSync("./src/resources/scss")){
+        buildTask.push("scss:build");
+        watchTask.push("scss");
+    };
+
+    run(buildTask,function(){
         console.log("CSS PreParsher Compile Success.");
         run("css:build",function(){
-            run("less","scss",function(){
+            run(watchTask,function(){
                 console.log("Work Space Ready.");
                 run("css",function(){});
             });
@@ -176,6 +189,7 @@ gulp.task("download",() => {
 
         gulp.src("./node_modules/jquery/dist/jquery.js").pipe(gulp.dest("./src/js/lib")); // jquery 최신 복사
         gulp.src("./node_modules/jquery-migrate/dist/jquery-migrate.js").pipe(gulp.dest("./src/js/lib")); // jquery 최신 호환성 migrate 복사
+        console.log("JS라이브러리 복사 완료.");
 
         setTimeout(function(){
             run("less:build","scss:build","css:build",function(){
