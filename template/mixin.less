@@ -1,6 +1,6 @@
 @import "../_lib/val.less";
 
-.bullet(@wid){ text-indent:@wid * -1px; padding-left:@wid; } // 아이콘 삽입시 첫번째줄 indent 적용
+.text-indent(@wid){ text-indent:@wid * -1px; padding-left:@wid; } // 아이콘 삽입시 첫번째줄 indent 적용
 .sr-only(){ position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rest(0,0,0,0); border:0; } // 접근성 전용코드
 .text-overflow() { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; zoom:1; } // 한줄 말줄임 처리
 .text-overflow(@wid) {display:inline-block;max-width:@wid;.text-overflow();} // 말줄임처리에서 가로값 적용시.
