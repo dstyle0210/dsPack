@@ -42,7 +42,8 @@ const resources = { // resources
     root:"./src/resources",
     css:"./src/resources/css",
     less:"./src/resources/less",
-    scss:"./src/resources/scss"
+    scss:"./src/resources/scss",
+    js:"./src/resources/js"
 };
 let downloadPromise = []; // 리소스 다운로드에 사용되는 Promise Array
 var concatStream = false; // CSS파일 병합시, 중복실행에 따른 Stream 오류 방지용 스위치
@@ -152,6 +153,8 @@ gulp.task("mkdir",() => {
         mkdirp(resources.less+"/sample");
         mkdirp(resources.scss+"/_lib");
         mkdirp(resources.scss+"/sample");
+        mkdirp(resources.js+"/app");
+        mkdirp(resources.js+"/lib");
     });
     gutil.log("Create Resources Folder.");
 });
@@ -166,9 +169,13 @@ gulp.task("download",() => {
     downloadPromise.push( download("val.scss",resources.scss+"/_lib") );
     downloadPromise.push( download("mixin.scss",resources.scss+"/_lib") );
     downloadPromise.push( download("sample-scss.scss",resources.scss+"/sample") );
+    downloadPromise.push( download("sample-scss.scss",resources.scss+"/sample") );
 
     Promise.all(downloadPromise).then(function (values) {
         console.log("리소스 다운로드 완료.");
+
+        gulp.src("./node_modules/jquery/dist/jquery.js").pipe(gulp.dest("./src/js/lib")); // jquery 최신 복사
+        gulp.src("./node_modules/jquery-migrate/dist/jquery-migrate.js").pipe(gulp.dest("./src/js/lib")); // jquery 최신 호환성 migrate 복사
 
         setTimeout(function(){
             run("less:build","scss:build","css:build",function(){

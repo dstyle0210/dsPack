@@ -55,3 +55,4 @@ node_modules/
 src/
 .idea/workspace.xml
 yeoman-babel/src
+yeoman-babel/node_modules
