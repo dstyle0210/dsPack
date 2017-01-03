@@ -33,11 +33,13 @@ import replace from "gulp-replace";
 import csso from "gulp-csso";
 import csscomb from "gulp-csscomb";
 import run from "run-sequence";
+import babel from "gulp-babel";
 
 const templates = "https://dstyle0210.github.io/dsPack/template/";
 const src = {
     root:"./src",
-    css:"./src/css"
+    css:"./src/css",
+    js:"./src/js"
 };
 const resources = { // resources
     root:"./src/resources",
@@ -52,6 +54,11 @@ var lessUsed = true;
 var scssUsed = true;
 
 /* TASK */
+gulp.task("js",function(){
+    gulp.src(resources.js+"/app/*.js")
+        .pipe(babel({presets:["es2015"]}))
+        .pipe(gulp.dest(src.js+"/app"))
+});
 gulp.task("default",() => {
     var buildTask = [];
     var watchTask = [];

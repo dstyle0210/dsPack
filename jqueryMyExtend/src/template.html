@@ -13,14 +13,42 @@
 </head>
 <body>
 
+<img src="https://img.publichs.com/ECMCFO/share/admin/display/connerbanner/201701/3971420170103114732.jpg" class="lazy" />
+<img src="https://img.publichs.com/ECMCFO/share/admin/display/connerbanner/201701/4642020170103134036.jpg" class="lazy" />
+<img src="https://img.publichs.com/ECMCFO/share/admin/display/connerbanner/201701/9869520103134150.jpg" class="lazy" />
+<img src="https://img.publichs.com/ECMCFO/share/admin/display/connerbanner/201701/7320720170103134135.jpg" class="lazy" />
+<img src="https://img.publichs.com/ECMCFO/share/admin/display/connerbanner/201701/724392003134206.jpg" class="lazy" />
+<img src="https://img.publichs.com/ECMCFO/share/admin/display/connerbanner/201701/9851720170103134242.jpg" class="lazy" />
+
+ㅡㅡㅡㅡㅡ
+
+<img lazy-src="https://img.publichs.com/ECMCFO/share/admin/display/connerbanner/201701/3971420170103114732.jpg" class="lazy" />
+<img lazy-src="https://img.publichs.com/ECMCFO/share/admin/display/connerbanner/201701/4642020170103134036.jpg" class="lazy" />
+<img lazy-src="https://img.publichs.com/ECMCFO/share/admin/display/connerbanner/201701/9869520103134150.jpg" class="lazy" />
+<img lazy-src="https://img.publichs.com/ECMCFO/share/admin/display/connerbanner/201701/7320720170103134135.jpg" class="lazy" />
+<img lazy-src="https://img.publichs.com/ECMCFO/share/admin/display/connerbanner/201701/724392003134206.jpg" class="lazy" />
+<img lazy-src="https://img.publichs.com/ECMCFO/share/admin/display/connerbanner/201701/9851720170103134242.jpg" class="lazy" />
 <script>
     $(function(){
         console.log($.win);
         console.log($.body);
         console.log($.blindHeight());
-    })
-</script>
 
+    });
+    window.addEventListener("load",function(){
+        console.log("1");
+    });
+
+    $.winLoad(function(){
+        console.log("2");
+        $(".lazy").lazy({
+            error:function(e){
+                console.log(e);
+            }
+        });
+    })
+
+</script>
 
 </body>
 </html>
