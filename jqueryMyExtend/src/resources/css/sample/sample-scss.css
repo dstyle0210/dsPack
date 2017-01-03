@@ -1,0 +1,6 @@
+@charset "UTF-8";
+
+
+/*! 샘플주석 : sample-scss */
+.sample{width:100px;height:100px}
+.sample,.sample-scss{display:block;overflow:hidden;color:red}

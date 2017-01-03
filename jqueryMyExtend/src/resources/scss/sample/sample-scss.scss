@@ -1,0 +1,7 @@
+@charset "UTF-8";
+@import "../_lib/val.scss";
+@import "../_lib/mixin.scss";
+
+/*! 샘플주석 : sample-scss */
+.sample{@include size(100px,100px);color:red;display:block;overflow:hidden;}
+.sample-scss{color:red;display:block;overflow:hidden;}
