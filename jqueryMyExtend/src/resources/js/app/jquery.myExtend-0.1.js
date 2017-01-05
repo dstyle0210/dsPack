@@ -14,7 +14,6 @@
         return this.each(function(idx,lazyItem){
             var img = $(lazyItem);
             img.lazySrc = img.attr(o.srcName);
-            console.log(img.errorSrc);
             img.errorSrc = img.attr(o.errorName);
             img.one("load",function(e){
                 o.load(e);
@@ -29,5 +28,9 @@
     };
     $.windowLoad = function(callback) {
         window.addEventListener("load", callback);
+    };
+    $.fn.radioClass = function(cn){
+        this.siblings().removeClass(cn);
+        return this.addClass(cn);
     };
 })(jQuery);
