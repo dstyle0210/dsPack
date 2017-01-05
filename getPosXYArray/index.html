@@ -1,0 +1,164 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Front-End 용 Task Runnner 걸프 셋팅 Gulp-setting by dstyle0210</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <style>
+        #header nav{background:none;}
+        #header nav li.fork,#header nav li.me{float:right;margin-left:6px;}
+    </style>
+</head>
+<body>
+<div id="header">
+    <nav>
+
+        <li class="downloads"><a href="https://github.com/dstyle0210/gulp-setting/zipball/master"><i class="fa fa-cloud-download" aria-hidden="true"></i> ZIP</a></li>
+        <li class="fork"><a href="https://github.com/dstyle0210/gulp-setting"><i class="fa fa-github" aria-hidden="true"></i>  GitHub</a></li>
+        <li class="me"><a href="http://dstyle0210.github.io/">Ds</a></li>
+        <li class="title">LINKS</li>
+    </nav>
+</div><!-- end header -->
+
+<div class="wrapper">
+
+    <section>
+        <div id="title">
+            <h1>Gulp-setting</h1>
+            <p>웹 프로젝트 진행시에 사용하는 Gulp Task Scaffolding 입니다.</p>
+            <hr>
+            <span class="credits left">Project maintained by <a href="https://github.com/dstyle0210">dstyle0210</a></span>
+            <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h3>USE</h3>
+        <p><a href="https://nodejs.org/ko/" target="_blank">nodejs</a>가 기본으로 설치되어있어야 하며, <a href="https://github.com/dstyle0210/gulp-setting/zipball/master">본 파일을 다운로드</a>받아서 프로젝트 루트에 압축을 풀어주고 도스창(CMD)을 열어서 아래와 같이 실행해주세요.</p>
+        <style>
+            pre code span.c{color:#999;}
+        </style>
+        <pre><code>$ npm install <span class="c">// "package.json"의 node module 다운로드.</span></code></pre>
+        <pre><code>$ gulp <span class="c">// "build" , "watch" 테스크 실행</span></code></pre>
+        <h3>Task List</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Task Name</th>
+                <th>Task deps</th>
+                <th>Comment</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>(Default)</td>
+                <td>build<br />watch</td>
+                <td>scss , less 을 컴파일하고, css 을 합친후에 각파일 감지를 시작합니다.</td>
+            </tr>
+            <tr>
+                <td>build</td>
+                <td>scss:build<br />less:build<br />css:concat</td>
+                <td>"src/" 폴더 내 "scss:build" , "less:build" , "css:concat" 실행</td>
+            </tr>
+            <tr>
+                <td>watch</td>
+                <td>scss:watch<br />less:watch<br />css:watch</td>
+                <td>"src/" 폴더 내 "scss:watch" , "less:watch" , "css:watch" 실행</td>
+            </tr>
+            <tr>
+                <td>scss</td>
+                <td>scss:build<br />scss:watch</td>
+                <td>scss(SASS)을 빌드하고, 감지하여 Task을 연결합니다.</td>
+            </tr>
+            <tr>
+                <td>scss:build</td>
+                <td>-</td>
+                <td>"/src/scss/**/*.scss" 을 /src/css 로 빌드합니다.</td>
+            </tr>
+            <tr>
+                <td>scss:watch</td>
+                <td>-</td>
+                <td>"/src/scss/**/*.scss"의 변화를 감지하여 /src/css 로 개별빌드합니다.</td>
+            </tr>
+            <tr>
+                <td>less</td>
+                <td>less:build<br />less:watch</td>
+                <td>LESS을 빌드하고, 감지하여 Task을 연결합니다.</td>
+            </tr>
+            <tr>
+                <td>less:build</td>
+                <td>-</td>
+                <td>"/src/less/**/*.less" 을 /src/css 로 빌드합니다.</td>
+            </tr>
+            <tr>
+                <td>less:watch</td>
+                <td>-</td>
+                <td>"/src/less/**/*.less"의 변화를 감지하여 /src/css 로 개별빌드합니다.</td>
+            </tr>
+            <tr>
+                <td>css</td>
+                <td>css:concat<br />css:watch</td>
+                <td>"/src/css/폴더명/*.css"을 "/src/css/폴더명.css 로 합치고, 변화를 감지하여 빌드합니다.</td>
+            </tr>
+            <tr>
+                <td>css:concat</td>
+                <td>-</td>
+                <td>"/src/css/폴더명/*.css"을 "/src/css/폴더명.css 로 빌드합니다.</td>
+            </tr>
+            <tr>
+                <td>css:watch</td>
+                <td>-</td>
+                <td>"/src/css/폴더명/*.css"의 변화를 감지하여 "/src/css/폴더명.css" 로 개별빌드합니다.</td>
+            </tr>
+            <tr>
+                <td>css:dist</td>
+                <td>css:concat</td>
+                <td>"/src/css/폴더명.css"의 파일을 "/dist/css" 로 압축 및 정렬하여 복사합니다.</td>
+            </tr>
+            </tbody>
+        </table>
+        <h3>Update History</h3>
+        <dl>
+            <dt>v0.0.1</dt>
+            <dd>신규생성.</dd>
+        </dl>
+        <dl>
+            <dt>v0.0.2</dt>
+            <dd>- 소스 최적화 , 주석 처리.</dd>
+            <dd>- "dist" 시 생성된 CSS의 줄바꿈처리.</dd>
+        </dl>
+        <dl>
+            <dt>v0.0.3</dt>
+            <dd>- "gulpfile.js" 버전 동기화</dd>
+        </dl>
+        <dl>
+            <dt>v0.1.0</dt>
+            <dd>- [BUG FIX] pakage.json에 "gulp-replace" 추가.</dd>
+            <dd>- [BUG FIX] scss 및 less 컴파일시 "@charset UTF-8" 추가되어 concat시 두개가 나오던 현상 처리.</dd>
+        </dl>
+        <dl>
+            <dt>v0.1.1</dt>
+            <dd>- [BUG FIX] "src/css/*.less" 일 경우, "@chatset"이 적용 안되던 현상 처리.</dd>
+            <dd>- [ADD] 파일명 앞에 "_(언더바)"가 있는 경우 "css:dist" Task에서 제외 기능추가.</dd>
+        </dl>
+        <h3>Support or Contact</h3>
+        <p>본 파일이나. 오류사항이 있다면, <a href="mailto:dstyle0210@gmail.com">저에게</a> 메일 보내주세요.</p>
+    </section>
+
+</div>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+</body>
+</html>

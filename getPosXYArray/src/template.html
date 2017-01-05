@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+<div id="canvas" style="background:url('test.gif');width:600px;height:600px;">
+    <div id="mover" style="position:absolute;top:0;left:0;background:red;width:40px;height:40px;"></div>
+</div>
+<button onclick="move(0);">움직여라</button>
+<script>
+    var pos = [];
+    $(function(){
+        var $canvas = $("#canvas");
+        var move = false;
+        var fps = 5;
+        var count = 0;
+        $canvas.on("mousedown",function(e){
+            pos = [];
+            move = true;
+            pos.push({x:Math.ceil(e.offsetX - 20),y:Math.ceil(e.offsetY - 20)});
+        });
+
+        // 마우스다운(drag==true) 마우스 움직이는 상태.
+        $canvas.on("mousemove",function(e){
+            if(move){
+                count++;
+                if(fps<count){
+                    pos.push({x:Math.ceil(e.offsetX - 20),y:Math.ceil(e.offsetY - 20)});
+                    count = 0;
+                }
+            };
+        });
+
+        // 마우스업 => 드래그 종료.
+        $canvas.on("mouseup",function(e){
+            move = false;
+            console.log(pos);
+        });
+    });
+    var mover = $("#mover");
+    function move(idx){
+        setTimeout(function(){
+            if(idx<pos.length){
+                mover.css({top:pos[idx].y, left:pos[idx].x});
+                move(idx+1);
+            };
+            console.log(idx);
+        },30);
+    };
+
+</script>
+</body>
+</html>
