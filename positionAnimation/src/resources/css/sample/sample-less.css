@@ -1,0 +1,6 @@
+@charset "UTF-8";
+
+
+/*! 샘플주석 : sample-less */
+.sample,.sample-less{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;zoom:1}
+.sample-less{display:block;color:red}

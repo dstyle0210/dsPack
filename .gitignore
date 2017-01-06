@@ -58,3 +58,4 @@ yeoman-babel/src
 yeoman-babel/node_modules
 !/jqueryMyExtend/src/
 !/getPosXYArray/src/
+!/positionAnimation/src/

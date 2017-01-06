@@ -1,0 +1,42 @@
+@import "../_lib/val.less";
+
+.text-indent(@wid){ text-indent:@wid * -1px; padding-left:@wid; } // 아이콘 삽입시 첫번째줄 indent 적용
+.sr-only(){ position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rest(0,0,0,0); border:0; } // 접근성 전용코드
+.text-overflow() { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; zoom:1; } // 한줄 말줄임 처리
+.text-overflow(@wid) {display:inline-block;max-width:@wid;.text-overflow();} // 말줄임처리에서 가로값 적용시.
+.resizable(@direction: both) { resize: @direction; overflow: auto; } // Options: horizontal, vertical, both , 리사이즈가 가능한 textarea 만들때 사용.
+.size(@width; @height) { width: @width; height: @height; } // 가로세로 한번에 적용.
+.square(@size) { .size(@size; @size); } // 정사각형일 경우, 사이즈를 하나만 받아서 처리.
+.center-block() { display: block; margin-left: auto; margin-right: auto; } // 블럭요소 가운데 정렬.
+.clearfix() { &:before, &:after { content: " "; display: table; } &:after { clear: both; } } // float되는 영역 haslayout 셋팅.
+.placeholder(@color: @input-color-placeholder) { // placeholder 색상 적용.
+  &::-moz-placeholder           { color: @color; } // Firefox
+  &:-ms-input-placeholder       { color: @color; } // Internet Explorer 10+
+  &::-webkit-input-placeholder  { color: @color; } // Safari and Chrome
+}
+.opacity(@opacity) { opacity: @opacity; /* IE8 filter*/ @opacity-ie: (@opacity * 100); filter: ~"alpha(opacity=@{opacity-ie})"; } // 투명도 적용
+
+.rotate(@degrees) {
+  -webkit-transform: rotate(@degrees);
+  -ms-transform: rotate(@degrees); // IE9 only
+  transform: rotate(@degrees);
+}
+.scale(@ratio; @ratio-y...) {
+  -webkit-transform: scale(@ratio, @ratio-y);
+  -ms-transform: scale(@ratio, @ratio-y); // IE9 only
+  transform: scale(@ratio, @ratio-y);
+}
+.translate(@x; @y) {
+  -webkit-transform: translate(@x, @y);
+  -ms-transform: translate(@x, @y); // IE9 only
+  transform: translate(@x, @y);
+}
+.skew(@x; @y) {
+  -webkit-transform: skew(@x, @y);
+  -ms-transform: skewX(@x) skewY(@y); // See https://github.com/twbs/bootstrap/issues/4885; IE9+
+  transform: skew(@x, @y);
+}
+.translate3d(@x; @y; @z) {
+  -webkit-transform: translate3d(@x, @y, @z);
+  transform: translate3d(@x, @y, @z);
+}

@@ -4,13 +4,20 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type='text/javascript'>var POSXY_ARRAY=JSON.parse('[{"x":277,"y":57},{"x":274,"y":60},{"x":266,"y":68},{"x":253,"y":83},{"x":236,"y":103},{"x":221,"y":127},{"x":204,"y":157},{"x":190,"y":186},{"x":179,"y":216},{"x":174,"y":242},{"x":174,"y":264},{"x":176,"y":287},{"x":179,"y":303},{"x":182,"y":318},{"x":184,"y":328},{"x":185,"y":335},{"x":185,"y":343},{"x":185,"y":350},{"x":183,"y":358},{"x":180,"y":369},{"x":177,"y":379},{"x":176,"y":387},{"x":174,"y":395},{"x":174,"y":404},{"x":174,"y":410}]');</script>
+    <script type='text/javascript' src='https://dstyle0210.github.io/getPosXYArray/dist/jquery.getPosXYArray.min.js'></script>
 </head>
 <body>
-<div id="canvas" style="background:url('test.gif');width:600px;height:600px;">
+<div id="canvas" style="background:url('https://img.publichs.com/ECMCFO/images/temp/test.gif');width:600px;height:600px;">
     <div id="mover" style="position:absolute;top:0;left:0;background:red;width:40px;height:40px;"></div>
 </div>
 <button onclick="move(0);">움직여라</button>
+<textarea name="" id="json" cols="30" rows="10"></textarea>
 <script>
+
+function posAnimationClass(){
+
+}
     var pos = [];
     $(function(){
         var $canvas = $("#canvas");
@@ -37,7 +44,19 @@
         // 마우스업 => 드래그 종료.
         $canvas.on("mouseup",function(e){
             move = false;
-            console.log(pos);
+            /*
+            var str = "[";
+            $.each(pos,function(num){
+                str += JSON.stringify(this)+((num==pos.length-1) ? "" : ",");
+            });
+            str += "]";
+            */
+            var str = "<script type='text/javascript'"+">var POSXY_ARRAY=JSON.parse('"+JSON.stringify(pos)+"');<"+"/script>\n";
+            str += "<script type='text/javascript' src='https:\/\/dstyle0210.github.io/getPosXYArray/dist/jquery.getPosXYArray.min.js'"+"><"+"/script>";
+
+            $("#json").text(str)
+            // console.log(str);
+            console.log( JSON.parse(str) );
         });
     });
     var mover = $("#mover");
@@ -47,7 +66,7 @@
                 mover.css({top:pos[idx].y, left:pos[idx].x});
                 move(idx+1);
             };
-            console.log(idx);
+            // console.log(idx);
         },30);
     };
 
